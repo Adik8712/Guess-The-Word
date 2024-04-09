@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Guess The Word | Комната №{{ room.id }}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <header class="d-flex justify-content-center py-3">
+        <ul class="nav nav-pills">
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
+            <li class="nav-item"><a href="{% url 'sign-out' %}" class="nav-link">Sign Out</a></li>
+        </ul>
+    </header>
+</div>
+
+<main class="bd-masthead mb-3" id="content">
+    <div class="container-xxl bd-gutter">
+        <div class="card border-none" style="width: 100%;">
+            <div class="card-header text-light"
+                style="text-align: center; background-color: #ede1ff;">
+                <b>Guess The Word</b>
+            </div>
+            <div class="card-body">
+                <h5 style="text-align: center;" class="card-title text-primary">
+                    Комната №{{ room.id }} | {{room.creator.username }}
+                </h5>
+                <p style="text-align: center; font-size: 15px; color: rgb(255, 179, 179);" class="card-text">
+                    Когда слово будет успешно отгадано одним из участников, 
+                    комната автоматически закрывается. 
+                    <br>После этого пользователи могут начать новую игру, 
+                    создав новую комнату, либо присоединиться к уже существующей.
+                </p>
+            </div>
+            <div class="container justify-content-center">
+                {% if room.is_closed %}
+                <p style="text-align: center; color: green;">
+                    <b>
+                        Слово 
+                        <span style="color: aqua;">
+                            {{ room.word.word}}
+                        </span> 
+                        было отгадано
+                    </b>
+                </p>
+                {% else %}
+                <form class="row g-3 justify-content-center" method="post">
+                    {% csrf_token %}
+                    <div class="col-auto">
+                        <input name="guessed" type="text" class="form-control" 
+                            placeholder="предложенное cлово."
+                            style="min-width: 10rem; max-width: 30rem !important;">
+                    </div>
+                    <div class="col-auto">
+                        <button type="submit" class="btn btn btn-outline-info mb-3">
+                            Попробовать
+                        </button>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+            
+            <div class="container justify-content-center">
+                <table class="table" style="text-align: center;">
+                    <thead>
+                        <tr>
+                            <th scope="col">Предложенное слово</th>
+                            <th scope="col">Схожесть</th>
+                            <th scope="col">Создатель</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for guessed_word in guessed_words %}
+                        <tr>
+                            <td>{{ guessed_word.word }}</td>
+                            <td>{{ guessed_word.is_similar }}</td>
+                            <td>{{ guessed_word.creator.username }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</main>
+{% endblock %}

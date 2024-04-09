@@ -1,0 +1,77 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Guess The Word | Регистрация
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<main>
+    {% if messages %}
+    {% for message in messages %}
+    {% if forloop.last %}
+    <div class="container justify-content-center" style="text-align: center;">
+        <div class="card mb-3 justify-content-center" style="border: 1px solid #6610f2; margin-top: 10px;">
+            <div class="card-header" style="background-color: #ede1ff;"><b>Guess The Word</b></div>
+            <div class="card-body text-secondary">
+                {% if message.tags %}
+                    <p class="card-text {{ message.tags }}" >
+                        {{ message }}
+                    </p>
+                {% else %}
+                    <p class="card-text" >
+                        {{ message }}
+                    </p>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+    {% endif %} 
+    {% endfor %}
+    {% endif %}
+
+    <div class="container justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card mt-5">
+                    <div style="background-color: #6610f2;" class="card-header text-white">Регистрация</div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Имя пользователя</label>
+                                <input name="username" type="text" class="form-control" id="username" placeholder="Введите ваше имя пользователя">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email адрес</label>
+                                <input name="email" type="email" class="form-control" id="email" placeholder="Введите ваш email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Пароль</label>
+                                <input name="password" type="password" class="form-control" id="password" placeholder="Введите ваш пароль">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Повторите пароль</label>
+                                <input name="cpassword" type="password" class="form-control" id="password" placeholder="Повторите ваш пароль">
+                            </div>
+
+                            <div class="mb-3">
+                                <a class="card-text" href="{% url 'sign-in' %}">У вас есть аккаунт?</a>
+                            </div>
+
+                            <button style="background-color: #6610f2;" type="submit" class="btn btn-success">Зарегистрироваться</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
