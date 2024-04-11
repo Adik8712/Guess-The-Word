@@ -42,6 +42,7 @@
               {% else %}
               <p>Ваше слово <b>{{ user_word.word }}</b> не отгадано.</p>
               {% endif %}
+
             </div>
           </div>
         </div>
@@ -72,11 +73,11 @@
       </form>
     </div>
 
-    <div class="container" style="margin: 10px; text-align: center">
+    <div class="container" style="margin: 10px; text-align: center;">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for user_room in user_rooms %}
         <div class="col">
-          <div class="card shadow-sm">
+          <div class="card shadow-sm" style="border-radius: 25px;">
             <div class="card-body">
               <p class="card-title">Комната №{{ user_room.id }}</p>
               <p class="card-text">
@@ -103,10 +104,10 @@
   <div class="container justify-content-center">
     <table class="mb-3" style="
         text-align: center;
-        border-radius: 15px;
+        border-radius: 20px;
         width: 100%;
         height: 100%;
-        background: #f0ebeb;
+        background: #f9f9f9;
       ">
       <thead>
         <tr>

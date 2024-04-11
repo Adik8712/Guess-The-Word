@@ -87,7 +87,7 @@ def main_page(request):
     if request.method == 'POST':
         create_word = request.POST['create_word']
         
-        if len(create_word) > 5:
+        if len(create_word) >= 5:
             if validator_text(create_word):
                 word = Word.objects.create(
                     word=create_word,
